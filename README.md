@@ -2,8 +2,6 @@
 
 Guidewire DEVTrails 2026 | Protecting delivery partners from income loss caused by uncontrollable external disruptions.
 
-Video Link  : https://youtu.be/wdHjv9sngxA
-Website Link: https://elseguro.netlify.app/ 
 ---
 
 ## Table of Contents
@@ -263,5 +261,9 @@ Regional language support in Hindi, Kannada, Tamil, and Telugu for broader acces
 
 Exploring the IRDAI sandbox framework as the regulatory path toward a formally licensed product.
 
-
 ---
+
+## Links
+
+**Live Demo:** https://elseguro.netlify.app/  
+**Demo Video:** https://youtu.be/wdHjv9sngxA
