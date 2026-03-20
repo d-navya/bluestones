@@ -4,6 +4,22 @@ Guidewire DEVTrails 2026 | Protecting delivery partners from income loss caused 
 
 ---
 
+## Table of Contents
+
+1. [Inspiration](#inspiration)
+2. [What It Does](#what-it-does)
+   - [Weekly Cycle](#weekly-cycle)
+   - [Fraud Review and Payout Pipeline](#fraud-review-and-payout-pipeline)
+   - [Persona-Based Scenarios](#persona-based-scenarios)
+3. [AI and ML Integration](#ai-and-ml-integration)
+4. [How We Plan to Build It](#how-we-plan-to-build-it)
+5. [Adversarial Defense & Anti-Spoofing Strategy](#adversarial-defense--anti-spoofing-strategy)
+6. [Challenges We Ran Into](#challenges-we-ran-into)
+7. [Accomplishments That We're Proud Of](#accomplishments-that-were-proud-of)
+8. [What We Learned](#what-we-learned)
+9. [What's Next for Seguro](#whats-next-for-seguro)
+---
+
 ## Inspiration
 
 India's food delivery workers on platforms like Zomato, Swiggy, Zepto, and Amazon earn income entirely contingent on being able to go outside and work. A monsoon evening, a local curfew, or dangerous air quality wipes out their earnings for that period with no recourse. There is no paid leave, no employer coverage, and no insurance product built for their reality.
@@ -141,7 +157,7 @@ The income baseline transitions from Week 1 data to a rolling average after suff
 
 ---
 
-## How We Built It
+## How We Plan to Build It
 
 ### Architecture
 
@@ -174,6 +190,37 @@ The income baseline transitions from Week 1 data to a rolling average after suff
 
 ---
 
+## Adversarial Defense & Anti-Spoofing Strategy
+
+### Why GPS Spoofing Doesn't Work
+
+Seguro never uses GPS as evidence. Both payout conditions rely on data that lives outside the worker's device: 
+- platform order logs (Condition 1) and 
+- independently queried external APIs like OpenWeatherMap, WAQI, and Google Maps Traffic (Condition 2). 
+
+Spoofing a location doesn't alter Swiggy's servers or fabricate rainfall data.
+
+The delivery log is the hardest check to beat: if a worker earned anything during the claimed window, the platform log shows it and the payout shrinks accordingly. Zone eligibility is derived from prior delivery history, so spoofing into a new zone doesn't retroactively add orders there either.
+
+### Detecting Coordinated Rings
+
+- **Cohort anomaly:** Isolation Forest flags claims that are statistical outliers against other workers claiming the same event in the same zone.
+- **Claim timing:** A burst of submissions for the same zone and week in a short window is treated as a coordination signal.
+- **Cross-platform consistency:** A drop on one app but normal volume on another in the same zone is flagged.
+
+### Handling Flagged Claims Fairly
+
+Flagged claims show a "verification required" message with a 48-hour window: same phrasing for honest workers and bad actors alike. Appeals are accepted, and a single flag doesn't permanently mark an account.
+
+| Attack | Defense |
+|---|---|
+| GPS spoof to fake zone | GPS not used in evaluation |
+| Claim loss without order drop | Condition 1 reads platform logs |
+| Fabricate disruption | Condition 2 requires multi-source agreement |
+| Coordinated ring | Isolation Forest cohort scoring |
+| Claim outside delivery history | Zone eligibility from historical logs |
+| Drop on one platform only | Cross-platform consistency check |
+---
 ## Challenges We Ran Into
 
 **Single-week baseline.** Week 1 may not represent a worker's true earning capacity if it was an unusual week. The rolling average mitigates this over time but early claims rely on limited data.
@@ -213,5 +260,6 @@ Moving from the mock platform API to real platform data integration, even in a s
 Regional language support in Hindi, Kannada, Tamil, and Telugu for broader accessibility.
 
 Exploring the IRDAI sandbox framework as the regulatory path toward a formally licensed product.
+
 
 ---
