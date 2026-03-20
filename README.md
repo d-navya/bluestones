@@ -2,6 +2,8 @@
 
 Guidewire DEVTrails 2026 | Protecting delivery partners from income loss caused by uncontrollable external disruptions.
 
+**Video Link**  : https://youtu.be/wdHjv9sngxA
+**Website Link**: https://elseguro.netlify.app/ 
 ---
 
 ## Table of Contents
