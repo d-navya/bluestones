@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguro — Income Protection for Delivery Workers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cafe: #4C3C19;
+  --kombu: #354024;
+  --moss: #889063;
+  --tan: #CFBB99;
+  --bone: #E5D7C4;
+  --white: #FAF6F0;
+  --danger: #B85C38;
+  --success: #3E6B3A;
+  --shadow: rgba(76,60,25,0.13);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--bone); color:var(--cafe); min-height:100vh; }
+
+/* ── GRAIN ── */
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════
+   LANDING
+═══════════════════════════════ */
+#page-landing {
+  min-height:100vh;
+  display:flex; flex-direction:column;
+}
+
+/* NAV */
+.land-nav {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.2rem 4rem;
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  transition: background .3s, backdrop-filter .3s;
+}
+.land-nav.scrolled {
+  background:rgba(229,215,196,.85);
+  backdrop-filter:blur(12px);
+  box-shadow:0 1px 20px var(--shadow);
+}
+.logo {
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem; color:var(--cafe);
+  letter-spacing:.02em;
+}
+.logo b { color:var(--kombu); }
+
+.btn-login {
+  background:var(--cafe); color:var(--bone);
+  border:none; border-radius:8px;
+  padding:.65rem 1.8rem;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9rem; font-weight:600;
+  cursor:pointer; letter-spacing:.03em;
+  transition: background .2s, transform .15s, box-shadow .2s;
+}
+.btn-login:hover { background:var(--kombu); transform:translateY(-1px); box-shadow:0 6px 18px var(--shadow); }
+
+/* HERO */
+.hero {
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center;
+  padding:9rem 2rem 5rem;
+  position:relative; overflow:hidden;
+  background: linear-gradient(160deg, var(--white) 0%, var(--bone) 60%, #d6c5a8 100%);
+}
+.hero-bg-text {
+  position:absolute; font-family:'Playfair Display',serif;
+  font-size:clamp(6rem,18vw,16rem); color:rgba(76,60,25,.045);
+  font-weight:700; pointer-events:none; user-select:none;
+  top:50%; left:50%; transform:translate(-50%,-50%);
+  white-space:nowrap; letter-spacing:.05em;
+}
+.hero-eyebrow {
+  font-size:.75rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.18em; color:var(--moss); margin-bottom:1.2rem;
+}
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,5vw,4.2rem);
+  color:var(--cafe); line-height:1.15;
+  max-width:720px; margin-bottom:1.4rem;
+}
+.hero h1 em { color:var(--kombu); font-style:italic; }
+.hero-desc {
+  font-size:1.05rem; color:var(--moss);
+  max-width:520px; line-height:1.7; margin-bottom:2.5rem;
+}
+.hero-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+.btn-hero-primary {
+  background:var(--cafe); color:var(--bone); border:none;
+  padding:.85rem 2.4rem; border-radius:9px;
+  font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:600;
+  cursor:pointer; transition:all .2s;
+}
+.btn-hero-primary:hover { background:var(--kombu); transform:translateY(-2px); box-shadow:0 8px 24px var(--shadow); }
+.btn-hero-outline {
+  background:transparent; color:var(--cafe);
+  border:1.5px solid var(--tan); padding:.85rem 2.4rem; border-radius:9px;
+  font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:500;
+  cursor:pointer; transition:all .2s;
+}
+.btn-hero-outline:hover { border-color:var(--moss); background:rgba(76,60,25,.04); }
+
+/* TRUST STRIP */
+.trust-strip {
+  display:flex; align-items:center; justify-content:center;
+  gap:2.5rem; padding:1.2rem 2rem;
+  border-top:1px solid rgba(76,60,25,.08);
+  background:rgba(255,255,255,.5);
+  flex-wrap:wrap;
+}
+.trust-item { font-size:.8rem; color:var(--moss); display:flex; align-items:center; gap:.4rem; font-weight:500; }
+.trust-item span { font-size:1rem; }
+
+/* HOW IT WORKS */
+.section-lp {
+  padding:5rem 4rem;
+  max-width:1100px; margin:0 auto;
+}
+.section-lp-full {
+  padding:5rem 4rem;
+  background:var(--white);
+}
+.section-lp-full > * { max-width:1100px; margin:0 auto; }
+.lp-label {
+  font-size:.72rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.16em; color:var(--moss); margin-bottom:.6rem;
+}
+.lp-h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,3vw,2.6rem);
+  color:var(--cafe); margin-bottom:1rem; line-height:1.2;
+}
+.lp-sub { color:var(--moss); font-size:.95rem; line-height:1.7; max-width:560px; margin-bottom:3rem; }
+
+/* STEPS */
+.steps-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:2rem;
+}
+.step-card {
+  background:var(--white); border-radius:14px;
+  padding:2rem; border:1px solid rgba(76,60,25,.08);
+  box-shadow:0 2px 14px var(--shadow);
+  transition:transform .2s, box-shadow .2s;
+}
+.step-card:hover { transform:translateY(-3px); box-shadow:0 8px 28px var(--shadow); }
+.step-num-big {
+  font-family:'Playfair Display',serif;
+  font-size:3rem; color:var(--tan); font-weight:700;
+  line-height:1; margin-bottom:.8rem;
+}
+.step-card h3 { font-size:1.05rem; color:var(--cafe); margin-bottom:.5rem; font-weight:600; }
+.step-card p { font-size:.86rem; color:var(--moss); line-height:1.6; }
+
+/* TIERS */
+.tiers-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;
+}
+.tier-lp {
+  border:1.5px solid var(--tan); border-radius:14px;
+  padding:1.8rem; background:var(--white);
+  position:relative; transition:all .2s;
+}
+.tier-lp:hover { border-color:var(--moss); transform:translateY(-2px); box-shadow:0 6px 22px var(--shadow); }
+.tier-lp.featured { border-color:var(--kombu); background:#f4f0e8; }
+.tier-lp-badge {
+  font-size:.68rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.1em; padding:3px 10px; border-radius:20px;
+  background:var(--tan); color:var(--cafe); display:inline-block; margin-bottom:1rem;
+}
+.tier-lp.featured .tier-lp-badge { background:var(--kombu); color:var(--bone); }
+.tier-pop { position:absolute; top:-10px; right:14px; background:var(--kombu); color:var(--bone); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:3px 10px; border-radius:10px; }
+.tier-price-big { font-family:'DM Mono',monospace; font-size:2rem; color:var(--cafe); }
+.tier-price-big sub { font-size:.8rem; color:var(--moss); font-family:'DM Sans',sans-serif; vertical-align:baseline; }
+.tier-feats { margin-top:1rem; }
+.tier-feat { font-size:.84rem; color:var(--moss); padding:.3rem 0; display:flex; align-items:center; gap:.5rem; border-bottom:1px solid var(--bone); }
+.tier-feat:last-child { border-bottom:none; }
+.tier-feat b { color:var(--cafe); }
+
+/* STATS */
+.stats-row {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem;
+  margin-bottom:3rem;
+}
+.stat-card {
+  text-align:center; padding:2rem 1rem;
+  background:var(--white); border-radius:14px;
+  border:1px solid rgba(76,60,25,.08);
+}
+.stat-num {
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem; color:var(--cafe); font-weight:700;
+}
+.stat-label { font-size:.8rem; color:var(--moss); margin-top:.3rem; }
+
+/* FAQ */
+.faq-list { max-width:680px; }
+.faq-item {
+  border-bottom:1px solid var(--bone); padding:1.1rem 0; cursor:pointer;
+}
+.faq-q {
+  font-size:.95rem; font-weight:600; color:var(--cafe);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.faq-a { font-size:.86rem; color:var(--moss); line-height:1.7; margin-top:.6rem; display:none; }
+.faq-a.open { display:block; }
+
+/* FOOTER */
+footer {
+  background:var(--cafe); color:var(--tan);
+  padding:2.5rem 4rem; display:flex;
+  justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:1rem;
+}
+footer .logo { color:var(--tan); font-size:1.3rem; }
+footer p { font-size:.78rem; color:var(--moss); }
+
+/* ═══════════════════════════════
+   APP SHELL (post-login)
+═══════════════════════════════ */
+#page-app { display:none; }
+
+.app-nav {
+  background:var(--cafe); height:58px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 2rem; position:sticky; top:0; z-index:100;
+  box-shadow:0 2px 18px rgba(0,0,0,.18);
+}
+.app-logo { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--tan); }
+.app-logo b { color:var(--bone); }
+.app-tabs { display:flex; }
+.app-tab {
+  background:none; border:none; color:var(--tan);
+  font-family:'DM Sans',sans-serif; font-size:.8rem;
+  font-weight:600; text-transform:uppercase; letter-spacing:.07em;
+  padding:0 1.3rem; height:58px; cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:all .2s;
+}
+.app-tab:hover { color:var(--bone); background:rgba(255,255,255,.06); }
+.app-tab.active { color:var(--bone); border-bottom-color:var(--moss); background:rgba(255,255,255,.05); }
+.app-user {
+  display:flex; align-items:center; gap:.6rem;
+  color:var(--tan); font-size:.85rem;
+}
+.user-avatar {
+  width:30px; height:30px; border-radius:50%;
+  background:var(--moss); color:var(--bone);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.78rem; font-weight:700;
+}
+.app-section { display:none; padding:2rem; max-width:1100px; margin:0 auto; }
+.app-section.active { display:block; }
+
+/* ═══════════════════════════════
+   DASHBOARD
+═══════════════════════════════ */
+.dash-hero {
+  background:var(--cafe); border-radius:16px;
+  padding:2.5rem; color:var(--bone); margin-bottom:2rem;
+  position:relative; overflow:hidden;
+}
+.dash-hero::after {
+  content:'सेगुरो';
+  position:absolute; right:-8px; top:50%; transform:translateY(-50%);
+  font-family:'Playfair Display',serif; font-size:8rem;
+  color:rgba(255,255,255,.04); pointer-events:none; letter-spacing:.05em;
+}
+.dash-eyebrow { font-size:.7rem; text-transform:uppercase; letter-spacing:.14em; color:var(--moss); margin-bottom:.3rem; }
+.dash-name { font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:.2rem; }
+.dash-sub { color:var(--tan); font-size:.88rem; margin-bottom:2rem; }
+.dash-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+.dash-stat {
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
+  border-radius:10px; padding:1rem 1.2rem;
+}
+.dash-stat-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:var(--tan); margin-bottom:.4rem; }
+.dash-stat-value { font-family:'DM Mono',monospace; font-size:1.4rem; }
+.green { color:#8FC98A; } .amber { color:#E4BB7A; }
+
+.cards2 { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:1.5rem; }
+.card {
+  background:var(--white); border-radius:14px; padding:1.5rem;
+  border:1px solid rgba(76,60,25,.09); box-shadow:0 2px 12px var(--shadow);
+}
+.card-title { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--moss); margin-bottom:1rem; }
+
+.mini-chart { display:flex; align-items:flex-end; gap:5px; height:56px; }
+.bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; }
+.bar { width:100%; border-radius:4px 4px 0 0; background:var(--tan); min-height:4px; cursor:pointer; transition:filter .15s; }
+.bar:hover { filter:brightness(1.1); }
+.bar.disrupted { background:#E9B8A5; }
+.bar.ok { background:var(--moss); }
+.bar-lbl { font-size:.6rem; color:var(--moss); }
+
+.tl { padding-left:1.8rem; position:relative; }
+.tl::before { content:''; position:absolute; left:7px; top:0; bottom:0; width:2px; background:var(--tan); }
+.tl-item { position:relative; padding-bottom:1.2rem; }
+.tl-dot { position:absolute; left:-1.4rem; top:3px; width:12px; height:12px; border-radius:50%; background:var(--tan); border:2px solid var(--white); }
+.tl-dot.done { background:var(--kombu); }
+.tl-dot.now { background:var(--cafe); }
+.tl-lbl { font-size:.82rem; font-weight:600; color:var(--cafe); }
+.tl-sub { font-size:.76rem; color:var(--moss); margin-top:.15rem; }
+
+.divider { height:1px; background:var(--bone); margin:.8rem 0; }
+.txt-sm { font-size:.82rem; }
+.txt-moss { color:var(--moss); }
+.flex-sb { display:flex; align-items:center; justify-content:space-between; }
+.mono { font-family:'DM Mono',monospace; font-size:.85rem; }
+.risk-bars { display:flex; gap:3px; margin-top:.6rem; }
+.risk-bar { height:5px; flex:1; border-radius:3px; background:var(--tan); }
+.risk-bar.on-med { background:#8C6D2F; }
+.risk-bar.on-low { background:var(--kombu); }
+.risk-bar.on-high { background:var(--danger); }
+
+/* ═══════════════════════════════
+   CLAIMS
+═══════════════════════════════ */
+.claims-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.4rem; }
+.claims-top h2 { font-family:'Playfair Display',serif; font-size:1.7rem; }
+.claims-top p { color:var(--moss); font-size:.88rem; }
+
+.claims-table-wrap {
+  background:var(--white); border-radius:14px; overflow:hidden;
+  border:1px solid rgba(76,60,25,.09); box-shadow:0 2px 12px var(--shadow);
+  margin-bottom:2rem;
+}
+table { width:100%; border-collapse:collapse; font-size:.84rem; }
+thead th {
+  text-align:left; padding:.65rem 1rem;
+  font-size:.68rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.1em; color:var(--moss);
+  background:var(--white); border-bottom:1.5px solid var(--bone);
+}
+tbody tr:hover { background:rgba(76,60,25,.025); }
+tbody td { padding:.75rem 1rem; border-bottom:1px solid var(--bone); color:var(--cafe); vertical-align:middle; }
+tbody tr:last-child td { border-bottom:none; }
+
+.badge { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:3px 9px; border-radius:20px; }
+.badge-pass { background:#D6EDD3; color:#2E5C2A; }
+.badge-fail { background:#FADDCC; color:#8C3820; }
+.badge-pend { background:var(--bone); color:var(--moss); }
+
+/* ═══════════════════════════════
+   CLAIM FORM
+═══════════════════════════════ */
+.claim-form-wrap {
+  background:var(--white); border-radius:16px; padding:2rem;
+  border:1px solid rgba(76,60,25,.09); box-shadow:0 2px 14px var(--shadow);
+  max-width:680px;
+}
+.form-h { font-family:'Playfair Display',serif; font-size:1.4rem; margin-bottom:.3rem; }
+.form-sub { color:var(--moss); font-size:.86rem; margin-bottom:1.8rem; }
+.fg { margin-bottom:1.1rem; }
+.fl { display:block; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--moss); margin-bottom:.35rem; }
+.fi, .fs {
+  width:100%; padding:.65rem .9rem;
+  border:1.5px solid var(--tan); border-radius:8px;
+  font-family:'DM Sans',sans-serif; font-size:.9rem;
+  background:var(--white); color:var(--cafe); outline:none;
+  transition:border .2s;
+}
+.fi:focus, .fs:focus { border-color:var(--kombu); }
+.form-row2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+.calc-box {
+  background:var(--bone); border-radius:10px;
+  padding:1rem 1.2rem; margin:1.2rem 0; font-size:.84rem;
+}
+.calc-row { display:flex; justify-content:space-between; padding:.2rem 0; }
+.calc-row.total { font-weight:700; font-size:.95rem; padding-top:.6rem; margin-top:.4rem; border-top:1.5px solid var(--tan); }
+
+.btn { display:inline-flex; align-items:center; gap:.5rem; padding:.68rem 1.6rem; border-radius:8px; border:none; font-family:'DM Sans',sans-serif; font-size:.9rem; font-weight:600; cursor:pointer; transition:all .2s; letter-spacing:.02em; }
+.btn-prim { background:var(--cafe); color:var(--bone); }
+.btn-prim:hover { background:var(--kombu); transform:translateY(-1px); box-shadow:0 4px 14px var(--shadow); }
+.btn-out { background:transparent; color:var(--cafe); border:1.5px solid var(--tan); }
+.btn-out:hover { border-color:var(--moss); }
+.btn-success { background:var(--kombu); color:var(--bone); }
+.btn-success:hover { background:#2a3319; }
+.btn:disabled { opacity:.5; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
+
+/* PIPELINE */
+.pipeline-wrap { margin-top:1.5rem; }
+.p-step {
+  display:flex; align-items:flex-start; gap:.9rem;
+  padding:.85rem 0; border-bottom:1px solid var(--bone);
+  opacity:0; transform:translateY(8px);
+  transition:opacity .35s, transform .35s;
+}
+.p-step.visible { opacity:1; transform:translateY(0); }
+.p-step:last-child { border-bottom:none; }
+.p-icon {
+  width:30px; height:30px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.85rem; font-weight:700;
+}
+.p-icon.spin {
+  background:var(--bone); color:var(--moss);
+  animation:spin 1s linear infinite;
+}
+.p-icon.ok { background:#D6EDD3; color:#2E5C2A; }
+.p-icon.fail { background:#FADDCC; color:#8C3820; }
+.p-icon.warn { background:#FCF0D4; color:#8C6D2F; }
+.p-title { font-size:.85rem; font-weight:600; color:var(--cafe); margin-bottom:.2rem; }
+.p-detail { font-size:.78rem; color:var(--moss); line-height:1.5; }
+
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.result-box {
+  border-radius:12px; padding:1.5rem; margin-top:1.2rem;
+  animation:fadeUp .4s ease;
+}
+.result-box.ok { background:#EFF7EE; border:1.5px solid #ACD8A8; }
+.result-box.fail { background:#FDF2EE; border:1.5px solid #E9B8A5; }
+.result-label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.4rem; }
+.result-label.ok { color:var(--success); }
+.result-label.fail { color:var(--danger); }
+.result-amount { font-family:'DM Mono',monospace; font-size:2.4rem; color:var(--kombu); }
+.result-sub { font-size:.83rem; color:var(--moss); margin-top:.3rem; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+/* ALERT TOAST */
+.toast {
+  display:none; position:fixed; bottom:2rem; right:2rem;
+  background:var(--cafe); color:var(--bone);
+  padding:.85rem 1.3rem; border-radius:10px;
+  font-size:.86rem; z-index:999;
+  animation:slideIn .3s ease; max-width:300px;
+  box-shadow:0 6px 24px rgba(0,0,0,.2);
+}
+.toast.show { display:block; }
+@keyframes slideIn { from { opacity:0; transform:translateX(16px); } to { opacity:1; transform:translateX(0); } }
+
+/* MODAL */
+.overlay { display:none; position:fixed; inset:0; background:rgba(25,18,5,.55); z-index:200; backdrop-filter:blur(4px); align-items:center; justify-content:center; }
+.overlay.open { display:flex; }
+.modal { background:var(--white); border-radius:18px; padding:0; max-width:580px; width:94%; position:relative; animation:fadeUp .3s ease; box-shadow:0 20px 60px rgba(0,0,0,.22); max-height:90vh; overflow-y:auto; }
+.modal-head { padding:1.8rem 1.8rem 0; }
+.modal-body { padding:0 1.8rem 1.8rem; }
+.modal-close { position:absolute; top:1rem; right:1rem; background:var(--bone); border:none; border-radius:50%; width:28px; height:28px; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; color:var(--cafe); }
+.modal-close:hover { background:var(--tan); }
+.modal h2 { font-family:'Playfair Display',serif; font-size:1.45rem; color:var(--cafe); margin-bottom:.25rem; }
+.modal-sub { color:var(--moss); font-size:.86rem; margin-bottom:1.4rem; }
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+  .land-nav { padding:.9rem 1.2rem; }
+  .section-lp, .section-lp-full { padding:3rem 1.2rem; }
+  .steps-grid, .tiers-grid, .stats-row { grid-template-columns:1fr; }
+  .dash-stats { grid-template-columns:1fr 1fr; }
+  .cards2 { grid-template-columns:1fr; }
+  footer { padding:2rem 1.2rem; flex-direction:column; text-align:center; }
+  .form-row2 { grid-template-columns:1fr; }
+  .app-nav { padding:0 1rem; }
+  .app-tab { padding:0 .7rem; font-size:.72rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+  LANDING PAGE
+══════════════════════════════ -->
+<div id="page-landing">
+
+  <!-- Nav -->
+  <nav class="land-nav" id="land-nav">
+    <div class="logo">seg<b>uro</b></div>
+    <button class="btn-login" onclick="doLogin()">Sign In →</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg-text">seguro</div>
+    <div class="hero-eyebrow">Guidewire DEVTrails 2026 · Income Insurance</div>
+    <h1>Your earnings,<br><em>protected</em> from the storm.</h1>
+    <p class="hero-desc">Parametric income insurance for India's gig delivery workers. When rain, curfew, or hazardous air keeps you off the road — Seguro pays you back.</p>
+    <div class="hero-btns">
+      <button class="btn-hero-primary" onclick="doLogin()">Get Protected — From ₹29/week</button>
+      <button class="btn-hero-outline" onclick="document.getElementById('how').scrollIntoView()">How it works ↓</button>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="section-lp-full">
+    <div>
+      <div class="lp-label">The scale of the problem</div>
+      <div class="lp-h2">Crores of workers. Zero income protection.</div>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num">1.2Cr+</div>
+          <div class="stat-label">Gig delivery workers in India</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">₹0</div>
+          <div class="stat-label">Employer-provided income cover</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">47</div>
+          <div class="stat-label">Avg disruption days per year in metro cities</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">₹620</div>
+          <div class="stat-label">Avg daily earnings at risk per worker</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="section-lp" id="how">
+    <div class="lp-label">How it works</div>
+    <div class="lp-h2">Coverage in three steps.</div>
+    <p class="lp-sub">No paperwork, no employer signature, no waiting weeks for a decision. Seguro is built around your platform data.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num-big">01</div>
+        <h3>Link your platforms</h3>
+        <p>Connect your Swiggy, Zomato, Zepto or Amazon Flex accounts. We collect your delivery history to establish your personal income baseline over Week 1 — no premium charged yet.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num-big">02</div>
+        <h3>Pick a tier</h3>
+        <p>Choose Basic (₹29), Standard (₹49), or Premium (₹79) per week. Your zone's historical disruption frequency adjusts the price by a small multiplier to keep it fair across cities.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num-big">03</div>
+        <h3>Claim when disrupted</h3>
+        <p>If rain, a bandh, or hazardous AQI cuts your orders, submit a claim. Our system cross-checks weather APIs, traffic data, and news — and pays your UPI the same day if verified.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tiers -->
+  <div class="section-lp-full">
+    <div>
+      <div class="lp-label">Coverage tiers</div>
+      <div class="lp-h2">Pick what fits your risk.</div>
+      <p class="lp-sub">All tiers run on a weekly cycle matching platform paydays. You always earn more by working than by relying on Seguro — that's intentional.</p>
+      <div class="tiers-grid">
+        <div class="tier-lp">
+          <div class="tier-lp-badge">Basic</div>
+          <div class="tier-price-big">₹29<sub>/week</sub></div>
+          <div class="tier-feats">
+            <div class="tier-feat">Coverage: <b>40%</b> of estimated loss</div>
+            <div class="tier-feat">Weekly cap: <b>₹800</b></div>
+            <div class="tier-feat">Same-day UPI payout</div>
+            <div class="tier-feat">All disruption types covered</div>
+          </div>
+        </div>
+        <div class="tier-lp featured">
+          <div class="tier-pop">Most Popular</div>
+          <div class="tier-lp-badge">Standard</div>
+          <div class="tier-price-big">₹49<sub>/week</sub></div>
+          <div class="tier-feats">
+            <div class="tier-feat">Coverage: <b>60%</b> of estimated loss</div>
+            <div class="tier-feat">Weekly cap: <b>₹1,400</b></div>
+            <div class="tier-feat">Same-day UPI payout</div>
+            <div class="tier-feat">Priority claim processing</div>
+          </div>
+        </div>
+        <div class="tier-lp">
+          <div class="tier-lp-badge">Premium</div>
+          <div class="tier-price-big">₹79<sub>/week</sub></div>
+          <div class="tier-feats">
+            <div class="tier-feat">Coverage: <b>80%</b> of estimated loss</div>
+            <div class="tier-feat">Weekly cap: <b>₹2,200</b></div>
+            <div class="tier-feat">Same-day UPI payout</div>
+            <div class="tier-feat">Multi-zone coverage</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-lp">
+    <div class="lp-label">Common questions</div>
+    <div class="lp-h2">Everything you need to know.</div>
+    <div class="faq-list">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Does Seguro pay automatically when it rains? <span>+</span></div>
+        <div class="faq-a">No — you submit a claim when you've had a disrupted week. This keeps payouts focused on workers who were actually affected and reduces administrative overhead. It takes under 2 minutes to apply.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What counts as a "disruption"? <span>+</span></div>
+        <div class="faq-a">Heavy rainfall, hazardous AQI levels, curfews, bandhs, or strikes — verified across multiple independent data sources (OpenWeatherMap, WAQI, GNews, Google Maps Traffic). A single unverified news article is not enough.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What if I worked some hours during the disruption? <span>+</span></div>
+        <div class="faq-a">Your delivery logs are cross-checked. If you completed orders during the disruption window, your estimated loss is reduced for those hours. You cannot claim lost income for time in which you demonstrably earned income.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How is my daily average calculated? <span>+</span></div>
+        <div class="faq-a">Your Week 1 delivery data establishes the initial baseline. After enough history, it transitions to a rolling average so your coverage grows with your income — and an unusually good first week doesn't lock you into an inflated baseline.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Can I claim for a new zone I just started delivering in? <span>+</span></div>
+        <div class="faq-a">Not immediately. A new zone requires one full week of delivery activity before claims are eligible there. Your existing zones are unaffected, and your premium is recalculated at the start of the next week.</div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem">
+      <button class="btn-hero-primary" onclick="doLogin()">Start protecting your income →</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="logo">seg<b>uro</b></div>
+    <p>Coverage: Loss of Income Only · Pricing: Weekly · Guidewire DEVTrails 2026</p>
+    <p style="color:var(--tan);font-size:.78rem">Built for India's delivery workforce</p>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════
+  APP (post-login)
+══════════════════════════════ -->
+<div id="page-app">
+  <nav class="app-nav">
+    <div class="app-logo">seg<b>uro</b></div>
+    <div class="app-tabs">
+      <button class="app-tab active" onclick="showApp('dashboard',this)">Dashboard</button>
+      <button class="app-tab" onclick="showApp('claims',this)">Claims</button>
+    </div>
+    <div class="app-user">
+      <div class="user-avatar">RS</div>
+      <span>Rajeev Shetty</span>
+    </div>
+  </nav>
+
+  <!-- ── DASHBOARD ── -->
+  <div id="app-dashboard" class="app-section active" style="padding-top:2rem">
+    <div class="dash-hero">
+      <div class="dash-eyebrow">Active Policy · Week 5 · Standard Tier</div>
+      <div class="dash-name">Rajeev Shetty</div>
+      <div class="dash-sub">Koramangala · Indiranagar &nbsp;·&nbsp; Swiggy + Zomato &nbsp;·&nbsp; UPI: rajeev.shetty@upi</div>
+      <div class="dash-stats">
+        <div class="dash-stat">
+          <div class="dash-stat-label">This Week Orders</div>
+          <div class="dash-stat-value amber">24</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">Prior Week Avg</div>
+          <div class="dash-stat-value">41</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">Daily Avg (₹)</div>
+          <div class="dash-stat-value">640</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-label">Coverage</div>
+          <div class="dash-stat-value green">Active</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards2">
+      <div class="card">
+        <div class="card-title">Weekly Order Volume</div>
+        <div class="mini-chart">
+          <div class="bar-wrap"><div class="bar ok" style="height:50px"></div><div class="bar-lbl">W2</div></div>
+          <div class="bar-wrap"><div class="bar ok" style="height:53px"></div><div class="bar-lbl">W3</div></div>
+          <div class="bar-wrap"><div class="bar ok" style="height:51px"></div><div class="bar-lbl">W4</div></div>
+          <div class="bar-wrap"><div class="bar disrupted" style="height:30px"></div><div class="bar-lbl">W5⚡</div></div>
+        </div>
+        <div class="divider"></div>
+        <div class="flex-sb txt-sm txt-moss">
+          <span>⚡ Week 5: heavy rain detected — claim eligible</span>
+          <span class="badge badge-fail">−41%</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Coverage Timeline</div>
+        <div class="tl">
+          <div class="tl-item"><div class="tl-dot done"></div><div class="tl-lbl">Week 1 — Baseline</div><div class="tl-sub">41 avg orders · ₹640 daily · No premium</div></div>
+          <div class="tl-item"><div class="tl-dot done"></div><div class="tl-lbl">Week 2 — Coverage Begins</div><div class="tl-sub">Standard tier · ₹49/wk</div></div>
+          <div class="tl-item"><div class="tl-dot done"></div><div class="tl-lbl">Weeks 3–4 — Active</div><div class="tl-sub">No disruption · No claim</div></div>
+          <div class="tl-item"><div class="tl-dot now"></div><div class="tl-lbl">Week 5 — Disruption ⚡</div><div class="tl-sub">24 orders · Rain · Claim eligible</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-lbl">Week 6 — Upcoming</div><div class="tl-sub">Premium recalculates</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards2">
+      <div class="card">
+        <div class="card-title">Current Policy</div>
+        <div class="flex-sb" style="margin-bottom:.8rem">
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.2rem">Standard Tier</div>
+            <div class="txt-moss txt-sm" style="margin-top:.2rem">60% loss coverage · ₹1,400/week cap</div>
+          </div>
+          <div style="text-align:right">
+            <div class="mono" style="font-size:1.2rem">₹49</div>
+            <div class="txt-moss txt-sm">/week</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="flex-sb txt-sm" style="margin-bottom:.3rem"><span class="txt-moss">Zone risk multiplier</span><span class="mono">1.03×</span></div>
+        <div class="flex-sb txt-sm"><span class="txt-moss">Effective weekly premium</span><span class="mono" style="font-weight:700">₹50.47</span></div>
+        <div class="card-title" style="margin-top:1rem">Zone Risk Score</div>
+        <div class="risk-bars">
+          <div class="risk-bar on-med"></div><div class="risk-bar on-med"></div><div class="risk-bar on-med"></div>
+          <div class="risk-bar"></div><div class="risk-bar"></div>
+        </div>
+        <div class="txt-sm txt-moss" style="margin-top:.3rem">Medium · Monsoon season</div>
+        <div style="margin-top:1.2rem">
+          <button class="btn btn-prim" onclick="showApp('claims', document.querySelectorAll('.app-tab')[1]);setTimeout(()=>openClaimModal(),100)">Submit Week 5 Claim →</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Linked Platforms</div>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <div class="flex-sb"><div style="display:flex;align-items:center;gap:.6rem"><div style="width:28px;height:28px;border-radius:7px;background:#FF6900;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.75rem">S</div><span style="font-size:.88rem;font-weight:500">Swiggy</span></div><span class="badge badge-pass">Linked</span></div>
+          <div class="flex-sb"><div style="display:flex;align-items:center;gap:.6rem"><div style="width:28px;height:28px;border-radius:7px;background:#E23744;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.75rem">Z</div><span style="font-size:.88rem;font-weight:500">Zomato</span></div><span class="badge badge-pass">Linked</span></div>
+          <div class="flex-sb"><div style="display:flex;align-items:center;gap:.6rem"><div style="width:28px;height:28px;border-radius:7px;background:var(--tan);display:flex;align-items:center;justify-content:center;color:var(--cafe);font-weight:700;font-size:.75rem">Z</div><span style="font-size:.88rem;font-weight:500">Zepto</span></div><span class="badge badge-pend">Not linked</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="txt-sm txt-moss">Operating zones: Koramangala, Indiranagar</div>
+        <div class="txt-sm txt-moss" style="margin-top:.2rem">Week 1 baseline: 41 avg orders · ₹640 daily</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CLAIMS ── -->
+  <div id="app-claims" class="app-section">
+    <div class="claims-top">
+      <div>
+        <h2>Claims</h2>
+        <p>Your compensation history</p>
+      </div>
+      <button class="btn btn-prim" onclick="openClaimModal()">+ New Claim</button>
+    </div>
+
+    <div class="claims-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Submitted</th>
+            <th>Disruption</th>
+            <th>Zone</th>
+            <th>Order Drop</th>
+            <th>Est. Loss (₹)</th>
+            <th>Payout (₹)</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="claims-tbody">
+          <tr>
+            <td>Week 3</td>
+            <td class="txt-moss txt-sm">12 Mar 2026</td>
+            <td>Heavy Rainfall</td>
+            <td>Koramangala</td>
+            <td class="mono">41 → 22 (−46%)</td>
+            <td class="mono">1,024</td>
+            <td class="mono" style="color:var(--kombu);font-weight:700">614</td>
+            <td><span class="badge badge-pass">Approved</span></td>
+          </tr>
+          <tr>
+            <td>Week 2</td>
+            <td class="txt-moss txt-sm">5 Mar 2026</td>
+            <td>Claimed: Bandh</td>
+            <td>Indiranagar</td>
+            <td class="mono">39 → 31 (−21%)</td>
+            <td class="mono">—</td>
+            <td class="mono">—</td>
+            <td><span class="badge badge-fail">Rejected</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CLAIM MODAL ══ -->
+<div class="overlay" id="claim-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeClaimModal()">✕</button>
+    <div class="modal-head">
+      <h2>New Claim Application</h2>
+      <div class="modal-sub">Rajeev Shetty · Standard Tier · Week 5</div>
+    </div>
+    <div class="modal-body">
+
+      <!-- FORM -->
+      <div id="claim-form-section">
+        <div class="fg">
+          <label class="fl">Date of Disruption</label>
+          <input class="fi" type="date" id="claim-date" onchange="updateCalc()" />
+        </div>
+        <div class="form-row2">
+          <div class="fg">
+            <label class="fl">Start Time</label>
+            <input class="fi" type="time" id="claim-time-start" value="14:00" onchange="updateCalc()" />
+          </div>
+          <div class="fg">
+            <label class="fl">End Time</label>
+            <input class="fi" type="time" id="claim-time-end" value="22:00" onchange="updateCalc()" />
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl">Location / Zone</label>
+          <select class="fs" id="claim-zone" onchange="updateCalc()">
+            <option value="Koramangala">Koramangala, Bengaluru</option>
+            <option value="Indiranagar">Indiranagar, Bengaluru</option>
+            <option value="HSR Layout">HSR Layout, Bengaluru</option>
+            <option value="Whitefield">Whitefield, Bengaluru</option>
+            <option value="Anna Nagar">Anna Nagar, Chennai</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="fl">Disruption Type</label>
+          <select class="fs" id="claim-type">
+            <option value="rain">Heavy Rainfall</option>
+            <option value="aqi">Hazardous AQI</option>
+            <option value="bandh">Curfew / Bandh / Strike (doesn't work)</option>
+          </select>
+        </div>
+        <div class="calc-box" id="calc-preview">
+          <div class="calc-row"><span class="txt-moss">Daily average</span><span class="mono">₹640</span></div>
+          <div class="calc-row"><span class="txt-moss">Disrupted hours</span><span class="mono" id="calc-hrs">8h</span></div>
+          <div class="calc-row"><span class="txt-moss">Estimated loss</span><span class="mono" id="calc-loss">₹320</span></div>
+          <div class="calc-row"><span class="txt-moss">Coverage (60%)</span><span class="mono" id="calc-cov">₹192</span></div>
+          <div class="calc-row total"><span>Expected payout</span><span class="mono" id="calc-final" style="color:var(--kombu)">₹192</span></div>
+        </div>
+        <div style="display:flex;gap:.8rem;justify-content:flex-end">
+          <button class="btn btn-out" onclick="closeClaimModal()">Cancel</button>
+          <button class="btn btn-prim" id="submit-btn" onclick="runPipeline()">Verify &amp; Submit →</button>
+        </div>
+      </div>
+
+      <!-- PIPELINE -->
+      <div id="claim-pipeline-section" style="display:none">
+        <div class="pipeline-wrap" id="pipeline-steps"></div>
+        <div id="claim-result"></div>
+        <div id="pipeline-actions" style="display:none;margin-top:1.2rem;text-align:right">
+          <button class="btn btn-success" onclick="closeClaimModal()">Done ✓</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── LANDING ──
+window.addEventListener('scroll', () => {
+  document.getElementById('land-nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+function toggleFaq(el) {
+  const a = el.querySelector('.faq-a');
+  const s = el.querySelector('.faq-q span');
+  a.classList.toggle('open');
+  s.textContent = a.classList.contains('open') ? '−' : '+';
+}
+
+function doLogin() {
+  document.getElementById('page-landing').style.display = 'none';
+  document.getElementById('page-app').style.display = 'block';
+  // Set today as default date
+  const d = new Date();
+  document.getElementById('claim-date').value = d.toISOString().split('T')[0];
+  updateCalc();
+  toast('Welcome back, Rajeev Shetty 👋');
+}
+
+// ── APP NAV ──
+function showApp(id, btn) {
+  document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('app-' + id).classList.add('active');
+  if (btn && btn.classList) btn.classList.add('active');
+}
+
+// ── TOAST ──
+function toast(msg, dur=3000) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), dur);
+}
+
+// ── CALC ──
+function updateCalc() {
+  const s = document.getElementById('claim-time-start')?.value || '14:00';
+  const e = document.getElementById('claim-time-end')?.value || '22:00';
+  const [sh,sm] = s.split(':').map(Number);
+  const [eh,em] = e.split(':').map(Number);
+  let hrs = Math.max(0, ((eh*60+em) - (sh*60+sm)) / 60);
+  const daily = 640;
+  const loss = Math.round(daily * hrs / 10);
+  const payout = Math.min(Math.round(loss * 0.6), 1400);
+  document.getElementById('calc-hrs').textContent = hrs.toFixed(1) + 'h';
+  document.getElementById('calc-loss').textContent = '₹' + loss.toLocaleString('en-IN');
+  document.getElementById('calc-cov').textContent = '₹' + Math.round(loss * 0.6).toLocaleString('en-IN');
+  document.getElementById('calc-final').textContent = '₹' + payout.toLocaleString('en-IN');
+}
+
+// ── MODAL ──
+function openClaimModal() {
+  document.getElementById('claim-overlay').classList.add('open');
+  document.getElementById('claim-form-section').style.display = '';
+  document.getElementById('claim-pipeline-section').style.display = 'none';
+  document.getElementById('claim-result').innerHTML = '';
+  document.getElementById('pipeline-steps').innerHTML = '';
+  document.getElementById('pipeline-actions').style.display = 'none';
+  const d = new Date();
+  document.getElementById('claim-date').value = d.toISOString().split('T')[0];
+  updateCalc();
+}
+
+function closeClaimModal() {
+  document.getElementById('claim-overlay').classList.remove('open');
+}
+
+// ── PIPELINE ──
+async function runPipeline() {
+  const date      = document.getElementById('claim-date').value;
+  const zone      = document.getElementById('claim-zone').value;
+  const type      = document.getElementById('claim-type').value;
+  const timeStart = document.getElementById('claim-time-start').value;
+  const timeEnd   = document.getElementById('claim-time-end').value;
+
+  if (!date) { toast('Please select a date'); return; }
+
+  document.getElementById('claim-form-section').style.display = 'none';
+  document.getElementById('claim-pipeline-section').style.display = '';
+
+  const stepsEl = document.getElementById('pipeline-steps');
+  stepsEl.innerHTML = '';
+
+  const ZONE_COORDS = {
+    'Koramangala': { lat: 12.9279, lon: 77.6271, city: 'Bengaluru' },
+    'Indiranagar': { lat: 12.9784, lon: 77.6408, city: 'Bengaluru' },
+    'HSR Layout':  { lat: 12.9116, lon: 77.6474, city: 'Bengaluru' },
+    'Whitefield':  { lat: 12.9698, lon: 77.7499, city: 'Bengaluru' },
+    'Anna Nagar':  { lat: 13.0850, lon: 80.2101, city: 'Chennai'   },
+  };
+  const coords = ZONE_COORDS[zone] || ZONE_COORDS['Koramangala'];
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  // ── Visible step helpers ──
+  function addVisibleStep(title, detail) {
+    const div = document.createElement('div');
+    div.className = 'p-step';
+    div.innerHTML = '<div class="p-icon spin">\u25CC</div><div><div class="p-title">' + title + '</div><div class="p-detail">' + detail + '</div></div>';
+    stepsEl.appendChild(div);
+    requestAnimationFrame(() => div.classList.add('visible'));
+    return div;
+  }
+
+  function resolveStep(div, pass, detail) {
+    const icon = div.querySelector('.p-icon');
+    icon.className = 'p-icon ' + (pass ? 'ok' : 'fail');
+    icon.textContent = pass ? '\u2713' : '\u2715';
+    div.querySelector('.p-detail').textContent = detail;
+  }
+
+  // ── SILENT API CALLS (run in background while visible steps show) ──
+
+  async function fetchWeather() {
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&daily=precipitation_sum,weathercode&timezone=Asia%2FKolkata&start_date=${date}&end_date=${date}`;
+      const res = await fetch(url, { signal: AbortSignal.timeout(7000) });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      return {
+        precip: data.daily?.precipitation_sum?.[0] ?? null,
+        wcode:  data.daily?.weathercode?.[0] ?? null
+      };
+    } catch { return null; }
+  }
+
+  async function fetchAQI() {
+    try {
+      const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${coords.lat}&longitude=${coords.lon}&hourly=european_aqi&timezone=Asia%2FKolkata&start_date=${date}&end_date=${date}`;
+      const res = await fetch(url, { signal: AbortSignal.timeout(7000) });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      const vals = (data.hourly?.european_aqi || []).filter(v => v != null);
+      return vals.length ? Math.max(...vals) : null;
+    } catch { return null; }
+  }
+
+  async function fetchNews() {
+    // GNews: try with demo key; gracefully handle failure
+    try {
+      const q   = encodeURIComponent(`bandh OR curfew OR strike ${coords.city}`);
+      const url = `https://gnews.io/api/v4/search?q=${q}&from=${date}T00:00:00Z&to=${date}T23:59:59Z&lang=en&country=in&max=5&apikey=demo`;
+      const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      return data.articles || [];
+    } catch { return null; } // null = API unavailable
+  }
+
+  // ── Fire API calls immediately (silently) based on disruption type ──
+  let wxPromise   = (type === 'rain')  ? fetchWeather() : Promise.resolve(null);
+  let aqiPromise  = (type === 'aqi')   ? fetchAQI()     : Promise.resolve(null);
+  let newsPromise = (type === 'bandh') ? fetchNews()    : Promise.resolve(null);
+
+  // ── VISIBLE STEP 1: Order Drop ──
+  const s1 = addVisibleStep('Order Volume Check', 'Comparing this week against your baseline…');
+  await sleep(1000);
+
+  const priorOrders = 41, thisWeekOrders = 24, k = 0.72;
+  const threshold   = (k * priorOrders).toFixed(1);
+  const orderDrop   = thisWeekOrders < k * priorOrders;
+  resolveStep(s1, orderDrop,
+    orderDrop
+      ? `${thisWeekOrders} orders this week < threshold (${k} × ${priorOrders} = ${threshold}). Significant drop confirmed.`
+      : `${thisWeekOrders} orders this week ≥ threshold (${threshold}). No meaningful drop — looks like a normal week.`
+  );
+
+  if (!orderDrop) {
+    await sleep(300);
+    showResult(false, 'No significant drop in your order volume was detected this week. Seguro covers disruptions where earnings are genuinely impacted — this week\'s activity appears normal.');
+    return;
+  }
+  await sleep(500);
+
+  // ── VISIBLE STEP 2: Zone Eligibility ──
+  const s2 = addVisibleStep('Zone Eligibility', `Checking ${zone} against your delivery history…`);
+  await sleep(900);
+
+  const eligibleZones = ['Koramangala', 'Indiranagar'];
+  const zoneOk = eligibleZones.includes(zone);
+  resolveStep(s2, zoneOk,
+    zoneOk
+      ? `${zone} found in your prior-week delivery zones. Eligible.`
+      : `${zone} not in your eligible zones yet. One full week of deliveries needed before claims can be filed there.`
+  );
+
+  if (!zoneOk) {
+    await sleep(300);
+    showResult(false, `${zone} is not yet an eligible zone for your account. Deliver there for one full week first, then coverage applies.`);
+    return;
+  }
+  await sleep(500);
+
+  // ── VISIBLE STEP 3: Verifying disruption (single spinner, no API names shown) ──
+  const typeLabels = { rain: 'rainfall conditions', aqi: 'air quality data', bandh: 'local disruption reports' };
+  const s3 = addVisibleStep('Disruption Verification', `Cross-referencing ${typeLabels[type] || 'external signals'} for ${zone} on ${date}…`);
+
+  // Await whichever API is relevant
+  let disruptionConfirmed = false;
+  let rejectionReason     = '';
+
+  if (type === 'rain') {
+    const wx = await wxPromise;
+    if (wx === null) {
+      // API unreachable — conservative: cannot confirm
+      disruptionConfirmed = false;
+      rejectionReason = `Weather data could not be retrieved for ${zone} on ${date}. Without independent confirmation of rainfall, the disruption cannot be verified.`;
+    } else {
+      const precip = wx.precip ?? 0;
+      const wcode  = wx.wcode  ?? 0;
+      const heavyRain = precip > 5 || (wcode >= 61 && wcode <= 82);
+      disruptionConfirmed = heavyRain;
+      if (heavyRain) {
+        rejectionReason = '';
+      } else {
+        rejectionReason = `Rainfall data for ${zone} on ${date} shows ${precip.toFixed(1)} mm precipitation (WMO code ${wcode}). This is below the heavy-rain threshold. The disruption could not be independently confirmed.`;
+      }
+    }
+
+  } else if (type === 'aqi') {
+    const aqi = await aqiPromise;
+    if (aqi === null) {
+      disruptionConfirmed = false;
+      rejectionReason = `Air quality data could not be retrieved for ${coords.city} on ${date}. Without confirmed AQI readings, the disruption cannot be verified.`;
+    } else {
+      disruptionConfirmed = aqi >= 100;
+      if (!disruptionConfirmed) {
+        rejectionReason = `Peak AQI for ${coords.city} on ${date} was ${aqi}. The hazardous threshold (100) was not reached. The disruption could not be independently confirmed.`;
+      }
+    }
+
+  } else if (type === 'bandh') {
+    const articles = await newsPromise;
+    if (articles === null) {
+      // API down — cannot confirm
+      disruptionConfirmed = false;
+      rejectionReason = `News sources could not be reached to verify a curfew or bandh in ${coords.city} on ${date}. Multiple independent signals are required to approve a claim.`;
+    } else if (articles.length > 0) {
+      disruptionConfirmed = true;
+    } else {
+      disruptionConfirmed = false;
+      rejectionReason = `No curfew, bandh, or strike reports were found for ${coords.city} on ${date} from news sources. A disruption event could not be independently corroborated.`;
+    }
+  }
+
+  resolveStep(s3, disruptionConfirmed,
+    disruptionConfirmed
+      ? `${type === 'rain' ? 'Rainfall' : type === 'aqi' ? 'Hazardous AQI' : 'Disruption event'} independently confirmed in ${zone} on ${date}.`
+      : `Disruption could not be confirmed in ${zone} on ${date} from external data sources.`
+  );
+
+  if (!disruptionConfirmed) {
+    await sleep(300);
+    showResult(false, rejectionReason);
+    return;
+  }
+  await sleep(400);
+
+  // ── All checks passed — calculate payout silently ──
+  const [sh, sm] = timeStart.split(':').map(Number);
+  const [eh, em] = timeEnd.split(':').map(Number);
+  const hrs   = Math.max(0.5, ((eh * 60 + em) - (sh * 60 + sm)) / 60);
+  const daily = 640;
+  const loss  = Math.round(daily * hrs / 10);
+  const payout = Math.min(Math.round(loss * 0.6), 1400);
+  const ref   = 'SEGURO-' + Math.floor(1000 + Math.random() * 9000) + '-W5';
+
+  showResult(true, payout, ref);
+  addClaimToTable(date, zone, type, payout);
+}
+
+function showResult(approved, payoutOrMsg, ref='') {
+  const el = document.getElementById('claim-result');
+  const actEl = document.getElementById('pipeline-actions');
+  if (approved) {
+    el.innerHTML = `
+      <div class="result-box ok">
+        <div class="result-label ok">Claim Approved</div>
+        <div class="result-amount">₹${payoutOrMsg.toLocaleString('en-IN')}</div>
+        <div class="result-sub">Sent to rajeev.shetty@upi · Ref: ${ref}</div>
+      </div>`;
+    toast('✓ ₹' + payoutOrMsg.toLocaleString('en-IN') + ' payout approved!');
+  } else {
+    el.innerHTML = `
+      <div class="result-box fail">
+        <div class="result-label fail">Claim Rejected</div>
+        <div style="font-size:.88rem;color:var(--cafe);margin-top:.4rem;line-height:1.6">${payoutOrMsg}</div>
+      </div>`;
+    toast('Claim could not be approved.');
+  }
+  actEl.style.display = 'block';
+}
+
+function addClaimToTable(date, zone, type, payout) {
+  const typeLabels = { rain: 'Heavy Rainfall', aqi: 'Hazardous AQI', bandh: 'Curfew / Bandh' };
+  const tbody = document.getElementById('claims-tbody');
+  const row = document.createElement('tr');
+  const d = new Date(date);
+  const fmtDate = d.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+  row.innerHTML = `
+    <td>Week 5</td>
+    <td class="txt-moss txt-sm">${fmtDate}</td>
+    <td>${typeLabels[type] || type}</td>
+    <td>${zone}</td>
+    <td class="mono">41 → 24 (−41%)</td>
+    <td class="mono">${Math.round(payout/0.6)}</td>
+    <td class="mono" style="color:var(--kombu);font-weight:700">${payout}</td>
+    <td><span class="badge badge-pass">Approved</span></td>`;
+  tbody.insertBefore(row, tbody.firstChild);
+}
+
+// Set default date on load
+window.addEventListener('DOMContentLoaded', () => {
+  const d = new Date();
+  const fi = document.getElementById('claim-date');
+  if (fi) fi.value = d.toISOString().split('T')[0];
+  updateCalc();
+});
+</script>
+</body>
+</html>
